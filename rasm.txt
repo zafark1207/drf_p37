@@ -1,0 +1,3 @@
+Filtering Search Ordering
+filtering category (id bo`yicha) va tags
+Search: title va content maydonlari bo`yicha qidirish
