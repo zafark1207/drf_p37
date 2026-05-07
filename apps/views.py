@@ -11,6 +11,7 @@ from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
+from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
@@ -245,12 +246,11 @@ class PostModelViewSet(ModelViewSet):
         if not request.user.is_authenticated:
             return Response(
                 {"detail": "Ushbu sahifani ko'rish uchun avval tizimga kiring."},
-                status=status.HTTP_401_UNAUTHORIZED
+                status=HTTP_401_UNAUTHORIZED
             )
 
         user_posts = self.get_queryset().filter(author=request.user)
 
-        # Agar pagination sozlangan bo'lsa, uni ham inobatga olamiz
         page = self.paginate_queryset(user_posts)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
